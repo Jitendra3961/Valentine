@@ -62,7 +62,7 @@ h1{
   to{transform:translateY(-10vh);}
 }
 
-/* Small popup bubbles */
+/* Small popup */
 .popup{
   position:absolute;
   background:white;
@@ -105,7 +105,6 @@ h1{
   to{transform:translateX(-50%) scale(1)}
 }
 
-/* Yes result message */
 #loveMsg{
   display:none;
   font-size:3rem;
@@ -134,7 +133,7 @@ let attempts = 0;
 let popupLock = false;
 let escapeCooldown = false;
 
-/* MANY funny lines */
+/* Funny teasing lines */
 const funnyTexts = [
   "Nice try 😜",
   "Hehe can't catch me 😂",
@@ -167,7 +166,7 @@ const funnyTexts = [
   "Click YES, be happy ❤️"
 ];
 
-/* YES CLICK */
+/* YES click */
 yesBtn.onclick = () => {
   question.style.display="none";
   yesBtn.style.display="none";
@@ -206,7 +205,7 @@ document.addEventListener("mousemove",(e)=>{
   }
 });
 
-/* Move No button */
+/* Move No */
 function moveNo(){
   const x=Math.random()*(window.innerWidth-120);
   const y=Math.random()*(window.innerHeight-70);
@@ -234,7 +233,7 @@ function showPopup(x,y){
   },900);
 }
 
-/* Big message (3 seconds) */
+/* Big message */
 function bigMessage(text){
   const b=document.createElement("div");
   b.className="bigMsg";
