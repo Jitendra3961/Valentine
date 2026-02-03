@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Be My Valentine ❤️</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  height:100vh;
+  font-family:"Comic Sans MS", cursive;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffd1dc);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* Title */
+h1{
+  font-size:3rem;
+  color:white;
+  text-shadow:0 0 20px white;
+}
+
+/* Buttons */
+.btn{
+  position:absolute;
+  padding:16px 38px;
+  font-size:20px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+  transition:0.18s ease;
+}
+
+#yes{
+  background:#ff2e63;
+  color:white;
+  left:45%;
+  top:60%;
+  box-shadow:0 0 25px #ff2e63;
+}
+
+#no{
+  background:#444;
+  color:white;
+  left:60%;
+  top:60%;
+}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  opacity:0.7;
+  animation:float 6s linear forwards;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* Popup bubble */
+.popup{
+  position:absolute;
+  background:white;
+  padding:8px 16px;
+  border-radius:14px;
+  font-size:14px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  animation:fade 1.2s forwards;
+}
+
+@keyframes fade{
+  0%{opacity:0; transform:translateY(10px)}
+  20%{opacity:1}
+  100%{opacity:0; transform:translateY(-10px)}
+}
+
+#loveMsg{
+  display:none;
+  font-size:3rem;
+  color:white;
+  text-shadow:0 0 20px white;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="question">Will you be my Valentine? ❤️</h1>
+<button id="yes" class="btn">Yes 💕</button>
+<button id="no" class="btn">No 😢</button>
+<div id="loveMsg">Yayyy!! You just made my day!! ❤️🥰</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const question = document.getElementById("question");
+const msg = document.getElementById("loveMsg");
+
+let speed = 1;
+let popupVisible = false;
+
+const funnyTexts = [
+  "Nice try 😜",
+  "Hehe can't catch me!",
+  "Nope nope nope 😂",
+  "Say YES already ❤️",
+  "Destiny says YES 😏",
+  "Almost!! 🤭"
+];
+
+/* YES CLICK */
+yesBtn.onclick = () => {
+  question.style.display="none";
+  yesBtn.style.display="none";
+  noBtn.style.display="none";
+  msg.style.display="block";
+  confetti();
+};
+
+/* NO RUN AWAY (faster only, no shrinking) */
+document.addEventListener("mousemove",(e)=>{
+  const rect = noBtn.getBoundingClientRect();
+
+  const dist = Math.hypot(
+    e.clientX-(rect.left+rect.width/2),
+    e.clientY-(rect.top+rect.height/2)
+  );
+
+  if(dist < 130){
+    speed += 0.2;
+
+    const newX = Math.random()*(window.innerWidth-120);
+    const newY = Math.random()*(window.innerHeight-70);
+
+    noBtn.style.left=newX+"px";
+    noBtn.style.top=newY+"px";
+
+    showPopup(e.clientX,e.clientY);
+  }
+});
+
+/* ONLY ONE popup at a time */
+function showPopup(x,y){
+  if(popupVisible) return;
+
+  popupVisible = true;
+
+  const pop=document.createElement("div");
+  pop.className="popup";
+  pop.innerText=funnyTexts[Math.floor(Math.random()*funnyTexts.length)];
+  pop.style.left=x+"px";
+  pop.style.top=y+"px";
+
+  document.body.appendChild(pop);
+
+  setTimeout(()=>{
+    pop.remove();
+    popupVisible=false;
+  },1200);
+}
+
+/* Floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},400);
+
+/* Confetti hearts */
+function confetti(){
+  for(let i=0;i<60;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize="28px";
+    h.style.animationDuration="3s";
+    document.body.appendChild(h);
+  }
+}
+</script>
+
+</body>
+</html>
